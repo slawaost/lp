@@ -8,13 +8,13 @@ class Menu:
     def neuBenutzer(self):
         print("Registrierung")
         name = input("geben Sie username ein: ")
-        __pas = input("und password: ")
+        pas = input("und password: ")
 
         if self.__benutzer is not None:
             if name == self.__benutzer.name: 
                 print("benutzer existiert bereits!")
                 return
-        self.__benutzer = Benutzer(name, __pas)
+        self.__benutzer = Benutzer(name, pas)
         print("Benutzer anlegen!")
 
 

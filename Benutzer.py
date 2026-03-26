@@ -4,6 +4,6 @@ class Benutzer:
 
     def __init__(self, name: str, pas: str):
         self.name = name
-        self.__pas = pas
+        self.pas = pas
 
         
