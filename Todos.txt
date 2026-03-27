@@ -1,0 +1,5 @@
+ToDos:
+
+1- Beim starten vom Spiel muss users.json gelesen werden1
+2- Beim Anmelden wird der Benutzer überprüft
+3- Beim Bentzer anlegen wird der neue Bentzer in user.json gespeichert
