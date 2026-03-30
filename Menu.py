@@ -45,13 +45,15 @@ class Menu:
     #json speichern
     def speichern(self):
         daten = [{"name": b.name, "pas": b.pas} for b in self.__benutzer]
+        #python funktion offnet datei im schreibmodus write
         with open("users.json", "w") as f:
-            json.dump(daten, f)
+            json.dump(daten, f) # das wandelt daten in json format
     #json laden
     def laden(self):
+        #offnet datei im lesenmodus read
         with open("users.json", "r") as f:
-            daten = json.load(f)
-            self.__benutzer = [Benutzer(d["name"], d["pas"]) for d in daten]
+            daten = json.load(f) # f- geoffnete datei
+            self.__benutzer = [Benutzer(d["name"], d["pas"]) for d in daten]  # für jeder d-dictionary
 
     def beenden(self):
     
