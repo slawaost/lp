@@ -5,8 +5,8 @@ class Menu:
     def __init__(self):
         
         self.__benutzer = []  #eine Liste erstelle fuer mehrere benutzer
-
         self.laden() # rufe sofort benutzerdatei auf
+
 
     #registriere neue benutzer
     def neuBenutzer(self):  
@@ -22,6 +22,8 @@ class Menu:
             #.append fügt benutzer hinzu
         self.__benutzer.append(Benutzer(name, pas))
         print("Benutzer anlegen!")
+        self.speichern() #speichere in .json
+
 
     def anmelden(self):
       
@@ -37,17 +39,19 @@ class Menu:
                 if username == b.name and password == b.pas:
                     print("anmeldung erfolgreich")
                     return
-            
-            print("sie haben", i+1, "von 3 versuch gemacht")
-        
+
+                print("sie haben", i+1, " von 3 versuch gemacht")
         print("sie haben nur 3 versuche")
+
 
     #json speichern
     def speichern(self):
         daten = [{"name": b.name, "pas": b.pas} for b in self.__benutzer]
         #python funktion offnet datei im schreibmodus write
         with open("users.json", "w") as f:
-            json.dump(daten, f) # das wandelt daten in json format
+            json.dump(daten, f, indent=4) # das wandelt daten in json format 
+
+
     #json laden
     def laden(self):
         #offnet datei im lesenmodus read
@@ -55,12 +59,11 @@ class Menu:
             daten = json.load(f) # f- geoffnete datei
             self.__benutzer = [Benutzer(d["name"], d["pas"]) for d in daten]  # für jeder d-dictionary
 
-    def beenden(self):
-    
+
+    def beenden(self):    
         print("beenden")
 
-        self.speichern() #speichere nach beenden
-
+      
     def Hauptmenu(self):
         ende = False
         while not ende:
@@ -80,7 +83,7 @@ class Menu:
                 ende = True
             else: 
                 print("keine ahnung was ist das ")
-
+                
 # start
 if __name__ == "__main__":
     menu = Menu()
