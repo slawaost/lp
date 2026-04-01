@@ -5,6 +5,7 @@ class Menu:
     def __init__(self):
         
         self.__benutzer = []  #eine Liste erstelle fuer mehrere benutzer
+        self.aktueller_benutzer = None
         self.laden() # rufe sofort benutzerdatei auf
 
 
@@ -30,18 +31,34 @@ class Menu:
         if not self.__benutzer:
             print('kein benutzer, bitte registrieren zuerst')
             return
-        #benutzer überprüft
-        for i in range(3):
+        
+        while True:
             username = input("username: ")
-            password = input("password: ")
-            #füge da auch schleife hinzu
+
+            #benutzer suchen
+            benutzer = None
             for b in self.__benutzer:
-                if username == b.name and password == b.pas:
+                if b.name == username:
+                    benutzer = b 
+                    break
+
+            if not benutzer:
+                print("benutzer existiert nicht")
+                continue
+
+            # 3 versuche für jeder 
+
+            for i in range(3):
+                password = input("password: ")
+
+                if password == benutzer.pas:
+
                     print("anmeldung erfolgreich")
+                    self.aktueller_benutzer = benutzer
                     return
 
                 print("sie haben", i+1, " von 3 versuch gemacht")
-        print("sie haben nur 3 versuche")
+            print("sie haben nur 3 versuche")
 
 
     #json speichern
@@ -60,6 +77,14 @@ class Menu:
             self.__benutzer = [Benutzer(d["name"], d["pas"]) for d in daten]  # für jeder d-dictionary
 
 
+    def abmelden(self):
+        if self.aktueller_benutzer:
+            print(f"{self.aktueller_benutzer.name} abgemeldet")
+            self.aktueller_benutzer = None
+        else:
+            print("kein benutzer angemeldet")
+
+
     def beenden(self):    
         print("beenden")
 
@@ -70,7 +95,8 @@ class Menu:
             print("**hauptmenu**")
             print("1 - Anmelden")
             print("2 - Benutzer anlegen")
-            print("3 - beenden")
+            print("3 - abmelden")
+            print("4 - beenden")
             
             wahl = input("was ist eure wahl?")
 
@@ -79,6 +105,8 @@ class Menu:
             elif wahl == "2":
                 self.neuBenutzer()
             elif wahl == "3":
+                self.abmelden()
+            elif wahl == "4":
                 self.beenden()
                 ende = True
             else: 
