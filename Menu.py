@@ -71,11 +71,14 @@ class Menu:
 
     #json laden
     def laden(self):
-        #offnet datei im lesenmodus read
-        with open("users.json", "r") as f:
-            daten = json.load(f) # f- geoffnete datei
-            self.__benutzer = [Benutzer(d["name"], d["pas"]) for d in daten]  # für jeder d-dictionary
-
+        try:
+            #offnet datei im lesenmodus read
+            with open("users.json", "r") as f:
+                daten = json.load(f) # f- geoffnete datei
+                self.__benutzer = [Benutzer(d["name"], d["pas"]) for d in daten]  # für jeder d-dictionary
+        except FileNotFoundError:
+            print("keine benutzerdatei gefunden")
+            self.__benutzer = [] # leere benutzerliste
 
     def abmelden(self):
         if self.aktueller_benutzer:
