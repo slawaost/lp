@@ -3,3 +3,5 @@ ToDos:
 1- Beim starten vom Spiel muss users.json gelesen werden ok
 2- Beim Anmelden wird der Benutzer überprüft ok 
 3- Beim Bentzer anlegen wird der neue Bentzer in user.json gespeichert ok
+4- User soll direkt nach dem Registrieren in der JSON Datei gespeichert werden und nicht erst nach dem Beenden. 
+Neue Funktion fürs Abmelden, Schleifenlogik korrigieren; alle Versuchen werden in .json abspeichern
