@@ -1,30 +1,18 @@
 [
     {
         "name": "slawa",
-        "pas": "test"
+        "pas": "123"
     },
     {
-        "name": "slawa2",
-        "pas": "test2"
+        "name": "1",
+        "pas": "1"
     },
     {
-        "name": "slawa3",
-        "pas": "test3"
+        "name": "2",
+        "pas": "2"
     },
     {
-        "name": "slawa4",
-        "pas": "test4"
-    },
-    {
-        "name": "slawa5",
-        "pas": "test5"
-    },
-    {
-        "name": "asdf",
-        "pas": "asdf"
-    },
-    {
-        "name": "qwer",
-        "pas": "qwer"
+        "name": "3",
+        "pas": "3"
     }
 ]

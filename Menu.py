@@ -24,22 +24,34 @@ class Menu:
         if not self.__benutzer:
             print('kein benutzer, bitte registrieren zuerst')
             return
+        
         username = input("username: ")
         benutzer = None   #benutzer suchen
+
         for b in self.__benutzer:
             if b.name == username:
                 benutzer = b
                 break
-            if not benutzer:
-                print("benutzer existiert nicht")
-                return
-            for i in range(3):         # 3 versuche für jeder
+
+        if not benutzer:
+            print("benutzer existiert nicht")
+            self.speichern_versuche(username, False)
+            return
+            
+        for i in range(3):         # 3 versuche für jeder
                 password = input("password: ")
+
                 if password == benutzer.pas:
                     print("anmeldung erfolgreich")
                     self.aktueller_benutzer = benutzer
+                    self.speichern_versuche(username, True)
                     return
                 print("sie haben", i+1, " von 3 versuch gemacht")
+                self.speichern_versuche(username, False)
+        print("3 flasche versuche, anmeldung gescheitert")
+
+
+
     '''def anmelden(self):
         if not self.__benutzer:
             print('kein benutzer, bitte registrieren zuerst')
@@ -63,14 +75,27 @@ class Menu:
                 print("sie haben", i+1, " von 3 versuch gemacht")
             print("sie haben nur 3 versuche")
 '''
+
+
     def speichern(self):       #json speichern
         daten = [{"name": b.name, "pas": b.pas} for b in self.__benutzer]
         #python funktion offnet datei im schreibmodus write
         with open("users.json", "w") as f: 
             json.dump(daten, f, indent=4)   # das wandelt daten in json format
             
-            self.__versuche.append(daten)
-        with open("versuch.json", "w") as f:
+    def speichern_versuche(self, username, erfolgreich):
+        versuch = {
+            "username": username,
+            "erfolgreich": erfolgreich
+        }
+        try:
+            with open("versuche.json", "r") as f:
+                daten = json.load(f)
+        except FileNotFoundError:
+            daten = []
+        daten.append(versuch)
+
+        with open("versuche.json", "w") as f:
             json.dump(daten, f, indent=4)
 
     def laden(self):    #json laden
@@ -113,6 +138,7 @@ class Menu:
                 ende = True
             else: 
                 print("keine ahnung was ist das ")
+                
 # start
 if __name__ == "__main__":
     menu = Menu()
