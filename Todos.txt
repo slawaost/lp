@@ -6,6 +6,6 @@ ToDos:
 
 4- User soll direkt nach dem Registrieren in der JSON Datei gespeichert werden und nicht erst nach dem Beenden. ok
 
-Neue Funktion fürs Abmelden, Schleifenlogik korrigieren; alle Versuchen werden in .json abspeichern??ok
+Neue Funktion fürs Abmelden, Schleifenlogik korrigieren; alle Versuchen werden in .json abspeichern?? ok
 
 verschiedene Möglichkeiten für Bneutzer (admin - eine menu(anzeigen, löschen, bearbeiten benutzer), einfach benutzr - andere ..)
