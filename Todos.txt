@@ -8,4 +8,4 @@ ToDos:
 
 Neue Funktion fürs Abmelden, Schleifenlogik korrigieren; alle Versuchen werden in .json abspeichern?? ok
 
-verschiedene Möglichkeiten für Bneutzer (admin - eine menu(anzeigen, löschen, bearbeiten benutzer), einfach benutzr - andere ..)
+verschiedene Möglichkeiten für Bneutzer (admin - eine menu(anzeigen, löschen, bearbeiten benutzer), einfach benutzr - andere ..) ok

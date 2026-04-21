@@ -21,19 +21,19 @@ class Menu:
         self.speichern()      #speichere in .json
 
     def anmelden(self):
-        print("DEBUG: ANMELDEN FUNKTION STARTET")
-        if not self.__benutzer:
+        print("geht oder?")
+        if not self.__benutzer:     #existiert user oder nicht
             print('kein benutzer, bitte registrieren zuerst')
             return
         
         username = input("username: ")
-        benutzer = None   #benutzer suchen
-
+        benutzer = None   
+        #benutzer suchen
         for b in self.__benutzer:
             if b.name == username:
                 benutzer = b
                 break
-
+                    #wenn nicht user existiert
         if not benutzer:
             print("benutzer existiert nicht")
             self.speichern_versuche(username, False)
@@ -42,7 +42,7 @@ class Menu:
         for i in range(3):         # 3 versuche für jeder
                 password = input("password: ")
 
-                if password == benutzer.pas:
+                if password == benutzer.pas:   #passwort korrekt
                     print("anmeldung erfolgreich")
                     self.aktueller_benutzer = benutzer
 
@@ -51,6 +51,7 @@ class Menu:
 
                     self.speichern_versuche(username, True)
                     return
+                        #wenn passwort falsch
                 print("sie haben", i+1, " von 3 versuch gemacht")
                 self.speichern_versuche(username, False)
         print("3 flasche versuche, anmeldung gescheitert")
@@ -61,18 +62,20 @@ class Menu:
         with open("users.json", "w") as f: 
             json.dump(daten, f, indent=4)   # das wandelt daten in json format
             
-    def speichern_versuche(self, username, erfolgreich):
+    def speichern_versuche(self, username, erfolgreich): # einzelnen lpgin versuch speichern
         versuch = {
             "username": username,
             "erfolgreich": erfolgreich
         }
         try:
+            # vorhandene datei laden
             with open("versuche.json", "r") as f:
                 daten = json.load(f)
         except FileNotFoundError:
+            #wenn datei nicht exisitert - neue datei erstellen
             daten = []
         daten.append(versuch)
-
+        # speichere aktualisierte versuche in json datei
         with open("versuche.json", "w") as f:
             json.dump(daten, f, indent=4)
 
@@ -97,6 +100,7 @@ class Menu:
         print("beenden")
 
     def ist_admin(self):
+        # prüfen, ob aktueller benutzer admin ist
         return self.aktueller_benutzer and self.aktueller_benutzer.rolle == "admin"
     
     def benutzer_anzeigen(self):
@@ -105,14 +109,31 @@ class Menu:
             print(f"Name: {b.name}, Rolle: {b.rolle}")
 
     def benutzer_loeschen(self):
-        name = input("Geben Sie den Namen des Benutzers ein, den Sie löschen möchten: ")
-        for b in self.__benutzer:
-            if b.name == name:
-                self.__benutzer.remove(b)
+        name = input("welche benutzer möchten sie löschen? ")
+        for b in self.__benutzer: 
+            if b.name == name: # finde benutzer mit passendem name
+                self.__benutzer.remove(b) # löscht user
                 print(f"Benutzer {name} gelöscht.")
                 self.speichern()  # Änderungen speichern
                 return
         print(f"Benutzer {name} nicht gefunden.")
+    def benutzer_bearbeiten(self):
+        name = input("welcher benutzer:")
+
+        for b in self.__benutzer:
+            if b.name == name:
+                neuer_name = input("neuer name :")
+                neue_password = input("neues passwort:")
+
+                if neuer_name:
+                    b.name = neuer_name
+                if neue_password:
+                    b.pas = neue_password
+
+                self.speichern()
+                print("benutzer aktualisisert")
+                return
+                print("nicht gefunden")
 
     def Hauptmenu(self):        #main
         ende = False
@@ -126,6 +147,7 @@ class Menu:
             if self.ist_admin():
                 print("5 - benutzer anzeigen")
                 print("6 - benutzer löschen")   
+                print("7 - benutzer bearbeiten")
             
             wahl = input("was ist eure wahl?")
 
@@ -138,10 +160,13 @@ class Menu:
             elif wahl == "4":
                 self.beenden()
                 ende = True
+                # admin funktionen
             elif wahl == "5" and self.ist_admin():
                 self.benutzer_anzeigen()
             elif wahl == "6" and self.ist_admin():
                 self.benutzer_loeschen()
+            elif wahl == "7" and self.ist_admin():
+                self.benutzer_bearbeiten()
             else: 
                 print("keine ahnung was ist das ")
                 

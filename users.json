@@ -5,8 +5,13 @@
         "rolle": "admin"
     },
     {
-        "name": "asdf",
-        "pas": "asdf",
+        "name": "slawa",
+        "pas": "test",
+        "rolle": "user"
+    },
+    {
+        "name": "slawa2",
+        "pas": "test2",
         "rolle": "user"
     }
 ]
