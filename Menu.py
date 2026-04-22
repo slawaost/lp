@@ -1,5 +1,4 @@
 from Benutzer import Benutzer
-import json 
 class Menu:
     def __init__(self):        
         self.__benutzer = []         #eine Liste erstelle fuer mehrere benutzer
@@ -21,7 +20,7 @@ class Menu:
         self.speichern()      #speichere in .json
 
     def anmelden(self):
-        print("geht oder?")
+        print("Anmeldung")
         if not self.__benutzer:     #existiert user oder nicht
             print('kein benutzer, bitte registrieren zuerst')
             return
