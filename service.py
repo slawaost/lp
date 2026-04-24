@@ -1,3 +1,4 @@
+from neurepo import BenutzerRepoDB
 from model import Benutzer
 
 class BenutzerService:
@@ -6,16 +7,14 @@ class BenutzerService:
         self.benutzer = repo.laden()
         self.aktueller = None
 
-    # ---------- REGISTER ----------
-    def erstellen(self, name, pas):
+    def registrieren(self, name, pas, rolle="user"):
         if any(b.name == name for b in self.benutzer):
             return "Benutzer existiert bereits"
 
-        self.benutzer.append(Benutzer(name, pas))
+        self.benutzer.append(Benutzer(name, pas, rolle))
         self.repo.speichern(self.benutzer)
         return "Benutzer erstellt"
 
-    # ---------- LOGIN ----------
     def anmelden(self, name, pas):
         for b in self.benutzer:
             if b.name == name:
@@ -26,7 +25,6 @@ class BenutzerService:
 
         return "Benutzer nicht gefunden"
 
-    # ---------- ADMIN ----------
     def anzeigen(self):
         return self.benutzer
 
@@ -44,7 +42,6 @@ class BenutzerService:
 
         self.repo.speichern(self.benutzer)
 
-    # ---------- RBAC ----------
     def ist_admin(self):
         return self.aktueller and self.aktueller.rolle == "admin"
 

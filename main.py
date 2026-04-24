@@ -1,20 +1,19 @@
-from repository import BenutzerRepo
+from db import DBConnection
+from neurepo import BenutzerRepoDB
 from service import BenutzerService
 from cli import CLI
 
 def main():
-    # Repository initialisieren (Datenzugriff)
-    repo = BenutzerRepo("users.json")
+    
+    db = DBConnection()
 
-    # Service (Logik + RBAC)
-    service = BenutzerService(repo)
+    repo = BenutzerRepoDB(db)
 
-    # CLI (User Interface)
+    service = BenutzerService(repo) 
+
     cli = CLI(service)
 
-    # Programm starten
     cli.run()
-
 
 if __name__ == "__main__":
     main()

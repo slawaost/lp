@@ -15,12 +15,12 @@ if con.is_connected():
     print("Verbindung zur Datenbank hergestellt.")            # überprüfung 
 
 cursor = con.cursor(buffered=True)                         # cursor objekt erstellen, buffered=True ermöglicht das Abrufen von Ergebnissen
-SQLBefehl = "SELECT * FROM benutzer" 
+SQLBefehl = "SELECT * FROM python" 
 cursor.execute(SQLBefehl)                                   # SQL befehl ausführen
 
 row=cursor.fetchone()                               # holt die erste Zeile des Ergebnisses, wenn es mehrere Zeilen gibt, kann man mit fetchone() weiter durch die Ergebnisse iterieren
 while row is not None:                      # solange es eine Zeile gibt, wird sie ausgegeben
-    print(row[0], row[1], row[2], row[3], row[4], row[5]) 
+    print(row[0], row[1], row[2]) 
     row=cursor.fetchone()                    # holt die nächste Zeile des Ergebnisses, wenn es keine Zeile mehr gibt, wird None zurückgegeben und die Schleife endet
 
 cursor.close()                           # schließt den Cursor, um Ressourcen freizugeben. 

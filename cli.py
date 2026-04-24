@@ -24,7 +24,7 @@ class CLI:
             elif wahl == "2":
                 name = input("Name: ")
                 pas = input("Passwort: ")
-                print(self.service.erstellen(name, pas))
+                print(self.service.registrieren(name, pas))
 
             elif wahl == "3":
                 self.service.logout()
@@ -34,7 +34,7 @@ class CLI:
 
             elif wahl == "5" and self.service.ist_admin():
                 for b in self.service.anzeigen():
-                    print(b.name, b.rolle)
+                    print(b.name, b.pas, b.rolle)
 
             elif wahl == "6" and self.service.ist_admin():
                 name = input("löschen: ")

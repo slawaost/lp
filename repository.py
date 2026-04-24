@@ -1,4 +1,6 @@
-import json
+''' diese repo use ich mit .json'''
+
+'''import json
 from model import Benutzer
 
 class BenutzerRepo:
@@ -22,4 +24,4 @@ class BenutzerRepo:
             for b in benutzer_liste
         ]
         with open(self.datei, "w") as f:
-            json.dump(daten, f, indent=4)
+            json.dump(daten, f, indent=4)'''
