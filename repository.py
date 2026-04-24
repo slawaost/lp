@@ -1,5 +1,5 @@
 import json
-from loginform.model import Benutzer
+from model import Benutzer
 
 class BenutzerRepo:
     def __init__(self, datei="users.json"):

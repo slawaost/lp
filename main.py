@@ -1,6 +1,6 @@
-from loginform.repository import BenutzerRepo
-from loginform.service import BenutzerService
-from loginform.cli import CLI
+from repository import BenutzerRepo
+from service import BenutzerService
+from cli import CLI
 
 def main():
     # Repository initialisieren (Datenzugriff)

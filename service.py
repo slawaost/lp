@@ -1,4 +1,4 @@
-from loginform.model import Benutzer
+from model import Benutzer
 
 class BenutzerService:
     def __init__(self, repo):
