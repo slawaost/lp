@@ -1,6 +1,6 @@
 import mysql.connector                     # das ist bibliothek für die mysql verbindung
 import json
-
+    
 with open('config.json', "r") as file:         #JSON-datei
     config = json.load(file)
 
@@ -9,8 +9,7 @@ con = mysql.connector.connect(               # verbindung zur datenbank herstell
     user=config['user'],
     password=config['password'],
     database=config['database'],
-    port=config['port']
-)
+    port=config['port'])
 
 if con.is_connected():
     print("Verbindung zur Datenbank hergestellt.")            # überprüfung 

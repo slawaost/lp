@@ -1,4 +1,10 @@
+
+
+''' test code erstes mal probiert alles da drin'''
+
+
 from Benutzer import Benutzer
+import json
 class Menu:
     def __init__(self):        
         self.__benutzer = []         #eine Liste erstelle fuer mehrere benutzer
