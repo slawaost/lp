@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import messagebox, simpledialog
 from service import BenutzerService
 from model import Benutzer
-
+from warehouse_gui import open_warehouse as WarehouseGUI
 class GUI:
     def __init__(self, service):
         self.service = service
@@ -35,12 +35,18 @@ class GUI:
     def login(self):
         name = self.name_entry.get()
         pas = self.pass_entry.get()
+
         result = self.service.anmelden(name, pas)
+
         messagebox.showinfo("Info", result)
 
         if result == "Login erfolgreich":
-            self.service.check_alte_benutzer()  # Alte Benutzer prüfen
             self.build_main()
+
+      
+
+    def open_warehouse(self):
+        WarehouseGUI(self.root, self.service.aktueller.name)
 
     def register(self):
         name = self.name_entry.get()
@@ -51,13 +57,14 @@ class GUI:
     def build_main(self):
         self.clear_frame()
 
-        tk.Label(self.frame, text="Hauptmenü").pack()
+        tk.Label(self.frame, text="Hauptmenü", font=("Arial", 14, "bold")).pack(pady=10)
+# ganz wichtig, damit user nicht hauptmenü sehen kann
+        if self.service.ist_admin():
+            tk.Button(self.frame, text="Benutzer anzeigen", command=self.anzeigen).pack(pady=5)
+            tk.Button(self.frame, text="Benutzer löschen", command=self.loeschen).pack(pady=5)
+            tk.Button(self.frame, text="Lagerverwaltung öffnen", command=self.open_warehouse).pack(pady=5)
 
         tk.Button(self.frame, text="Logout", command=self.logout).pack(pady=5)
-
-        if self.service.ist_admin():
-            tk.Button(self.frame, text="Alle anzeigen", command=self.anzeigen).pack(pady=5)
-            tk.Button(self.frame, text="Benutzer löschen", command=self.loeschen).pack(pady=5)
 
     def logout(self):
         self.service.logout()
