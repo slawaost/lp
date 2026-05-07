@@ -20,6 +20,7 @@ Das Projekt ist in Schichten aufgebaut:
 * Repository (SQL)
 * DBConnection (DBVerbindung)
 * Model (Benutzer)
+* GUI mit tkinter erstellt wurde
 
 ##  Rollen (RBAC)
 
