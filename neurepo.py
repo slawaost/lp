@@ -15,7 +15,7 @@ class BenutzerRepoDB:
         conn.close()
 
         return [
-            Benutzer(row['name'], row['pas'], row['rolle'])
+            Benutzer(row['name'], row['pas'], row['rolle'], row['expiry_date'])
             for row in rows
         ]
 
@@ -28,8 +28,8 @@ class BenutzerRepoDB:
 
         for benutzer in liste:
             cursor.execute(
-                "INSERT INTO python (name, pas, rolle) VALUES (%s, %s, %s)",
-                (benutzer.name, benutzer.pas, benutzer.rolle)
+                "INSERT INTO python (name, pas, rolle, expiry_date) VALUES (%s, %s, %s, %s)",
+                (benutzer.name, benutzer.pas, benutzer.rolle, benutzer.expiry_date)
             )
 
         conn.commit()

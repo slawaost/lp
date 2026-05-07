@@ -2,6 +2,7 @@ from neurepo import BenutzerRepoDB
 from model import Benutzer
 from db import DBConnection
 from model import Benutzer
+from datetime import date, timedelta
 # Die Klasse BenutzerService bietet Methoden zur Registrierung, Anmeldung, Anzeige, Löschung und Bearbeitung von Benutzern. Sie verwendet die BenutzerRepoDB-Klasse, um Benutzerdaten in der Datenbank zu speichern und zu laden. Die Methode ist_admin() überprüft, ob der aktuell angemeldete Benutzer die Rolle "admin" hat, und die Methode logout() setzt den aktuellen Benutzer auf None zurück.
 class BenutzerService:
     def __init__(self, repo):
@@ -37,6 +38,20 @@ class BenutzerService:
             return "Benutzer nicht gefunden"
         self.repo.speichern(self.benutzer)
         return "Benutzer gelöscht"
+    
+    def löschen_sofort(self, name):
+        return self.löschen(name)
+
+    def löschen_in_woche(self, name):
+        expiry = date.today() + timedelta(days=7)
+
+        for b in self.benutzer:
+            if b.name == name:
+                b.expiry_date = expiry
+                self.repo.speichern(self.benutzer)
+                return f"Benutzer wird am {expiry} gelöscht"
+            
+        return "Benutzer nicht gefunden"
 
     def bearbeiten(self, name, neuer_name=None, neues_pass=None):
         for b in self.benutzer:

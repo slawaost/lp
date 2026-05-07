@@ -1,6 +1,7 @@
 class Benutzer:
     #erstellt die Klasse Benutzer mit den Attributen name, pas und rolle. Die Rolle hat einen Standardwert von "user".
-    def __init__(self, name: str, pas: str, rolle: str = "user"):
+    def __init__(self, name: str, pas: str, rolle: str = "user", expiry_date=None):
         self.name = name
         self.pas = pas
         self.rolle = rolle
+        self.expiry_date = expiry_date

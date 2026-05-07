@@ -1,3 +1,4 @@
+from os import name
 import tkinter as tk
 from tkinter import messagebox, simpledialog
 from service import BenutzerService
@@ -61,10 +62,18 @@ class GUI:
 # ganz wichtig, damit user nicht hauptmenü sehen kann
         if self.service.ist_admin():
             tk.Button(self.frame, text="Benutzer anzeigen", command=self.anzeigen).pack(pady=5)
-            tk.Button(self.frame, text="Benutzer löschen", command=self.loeschen).pack(pady=5)
+        
             tk.Button(self.frame, text="Lagerverwaltung öffnen", command=self.open_warehouse).pack(pady=5)
+            tk.Button(self.frame, text="User sofort löschen", command=self.loeschen).pack(pady=5)
+            tk.Button(self.frame, text="User später löschen", command=self.loeschen_spaeter).pack(pady=5)    
 
         tk.Button(self.frame, text="Logout", command=self.logout).pack(pady=5)
+
+    def loeschen_spaeter(self):
+        name = tk.simpledialog.askstring("Löschen", "Name:")
+        if name:
+            result = self.service.löschen_in_woche(name)
+            messagebox.showinfo("Info", result)
 
     def logout(self):
         self.service.logout()
