@@ -1,0 +1,9 @@
+config.json
+__pycache__
+.vscode
+settings.json
+users.json
+versuche.json
+Todos.txt
+warehouse.py
+warehouse_gui.py
