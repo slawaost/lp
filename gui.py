@@ -65,7 +65,9 @@ class GUI:
         
             tk.Button(self.frame, text="Lagerverwaltung öffnen", command=self.open_warehouse).pack(pady=5)
             tk.Button(self.frame, text="User sofort löschen", command=self.loeschen).pack(pady=5)
-            tk.Button(self.frame, text="User später löschen", command=self.loeschen_spaeter).pack(pady=5)    
+            tk.Button(self.frame, text="User später löschen", command=self.loeschen_spaeter).pack(pady=5)
+            tk.Button(self.frame, text="Geplante Löschungen anzeigen", command=self.geplante_loeschungen_anzeigen).pack(pady=5)
+        
 
         tk.Button(self.frame, text="Logout", command=self.logout).pack(pady=5)
 
@@ -89,6 +91,15 @@ class GUI:
         if name:
             result = self.service.löschen(name)
             messagebox.showinfo("Info", result)
+
+    def geplante_loeschungen_anzeigen(self):
+        users = self.service.geplante_loeschungen_anzeigen()
+        text = "\n".join([f"{b.name} (Löscht am {b.expiry_date})" for b in users])
+
+        if not text:
+            text = "Keine geplanten Löschungen."
+
+        messagebox.showinfo("Geplante Löschungen", text)
 
     def run(self):
         self.root.mainloop()

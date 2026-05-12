@@ -6,9 +6,9 @@ from gui import GUI
 def main():
     # DB-Verbindung erstellen
     db = DBConnection()
-# BenutzerRepoDB-Instanz erstellen und mit der DB-Verbindung initialisieren
+    # BenutzerRepoDB-Instanz erstellen und mit der DB-Verbindung initialisieren
     repo = BenutzerRepoDB(db)
-# BenutzerService-Instanz erstellen und mit dem Repository initialisieren
+    # BenutzerService-Instanz erstellen und mit dem Repository initialisieren
     service = BenutzerService(repo) 
  
     gui = GUI(service)

@@ -1,5 +1,5 @@
 class Benutzer:
-    #erstellt die Klasse Benutzer mit den Attributen name, pas und rolle. Die Rolle hat einen Standardwert von "user".
+    #erstellt die Klasse Benutzer mit den Attributen name, pas und rolle. Die Rolle hat einen Standardwert von "user". Das Attribut expiry_date wird hinzugefügt, um das Ablaufdatum eines Benutzers zu speichern, falls dieser in Zukunft gelöscht werden soll.
     def __init__(self, name: str, pas: str, rolle: str = "user", expiry_date=None):
         self.name = name
         self.pas = pas

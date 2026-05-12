@@ -3,12 +3,14 @@ from model import Benutzer
 from db import DBConnection
 from model import Benutzer
 from datetime import date, timedelta
-# Die Klasse BenutzerService bietet Methoden zur Registrierung, Anmeldung, Anzeige, Löschung und Bearbeitung von Benutzern. Sie verwendet die BenutzerRepoDB-Klasse, um Benutzerdaten in der Datenbank zu speichern und zu laden. Die Methode ist_admin() überprüft, ob der aktuell angemeldete Benutzer die Rolle "admin" hat, und die Methode logout() setzt den aktuellen Benutzer auf None zurück.
+# Die Klasse BenutzerService bietet Methoden zur Registrierung, Anmeldung, Anzeige, Löschung und Bearbeitung von Benutzern.
 class BenutzerService:
     def __init__(self, repo):
+        # repo ist eine Instanz von BenutzerRepoDB, die für die Interaktion mit der Datenbank verantwortlich ist. 
         self.repo = repo
         self.benutzer = repo.laden()
         self.aktueller = None
+
 # Die Methode registrieren() überprüft, ob ein Benutzer mit dem angegebenen Namen bereits existiert. Wenn ja, wird eine Fehlermeldung zurückgegeben. Andernfalls wird ein neues Benutzer-Objekt erstellt, zur Liste der Benutzer hinzugefügt und in der Datenbank gespeichert. Schließlich wird eine Erfolgsmeldung zurückgegeben.
     def registrieren(self, name, pas, rolle="user"):
         if any(b.name == name for b in self.benutzer):
@@ -52,6 +54,11 @@ class BenutzerService:
                 return f"Benutzer wird am {expiry} gelöscht"
             
         return "Benutzer nicht gefunden"
+
+    def geplante_loeschungen_anzeigen(self):
+        return [b for b in self.benutzer if b.expiry_date is not None]
+    
+    
 
     def bearbeiten(self, name, neuer_name=None, neues_pass=None):
         for b in self.benutzer:
