@@ -21,8 +21,16 @@ class BenutzerService:
         return "Benutzer erstellt"
 # Die Methode anmelden() überprüft, ob ein Benutzer mit dem angegebenen Namen existiert. Wenn ja, wird das Passwort überprüft. Bei erfolgreicher Anmeldung wird der aktuelle Benutzer gesetzt und eine Erfolgsmeldung zurückgegeben. Bei falschem Passwort oder nicht gefundenem Benutzer werden entsprechende Fehlermeldungen zurückgegeben.
     def anmelden(self, name, pas):
+        
+        # alle benutzer aus der datennbank laden, um sicherzustellen, dass die neursten daten verwendet werden. Dies ist wichtig, falls sich die benutzerliste geändert hat.
+        self.benutzer = self.repo.laden()
+
         for b in self.benutzer:
             if b.name == name:
+
+                if not b.aktiv:
+                    return "Benutzer ist deaktiviert"
+
                 if b.pas == pas:
                     self.aktueller = b
                     return "Login erfolgreich"
@@ -33,7 +41,10 @@ class BenutzerService:
     def anzeigen(self):
         return self.benutzer
 
+    # Die Methode löschen() entfernt einen Benutzer mit dem angegebenen Namen aus der Liste der Benutzer und speichert die aktualisierte Liste in der Datenbank. 
+    # Wenn kein Benutzer mit dem Namen gefunden wird, wird eine Fehlermeldung zurückgegeben. Andernfalls wird eine Erfolgsmeldung zurückgegeben.
     def löschen(self, name):
+        # vorher die Anzahl der Benutzer speichern, um später zu überprüfen, ob ein Benutzer gelöscht wurde
         vorher = len(self.benutzer)
         self.benutzer = [b for b in self.benutzer if b.name != name]
         if len(self.benutzer) == vorher:
@@ -41,14 +52,20 @@ class BenutzerService:
         self.repo.speichern(self.benutzer)
         return "Benutzer gelöscht"
     
+    
     def löschen_sofort(self, name):
         return self.löschen(name)
 
+    # diese methode setzt das ablaufdatum eines benutzers auf eine woche in der zukunft, damit er in eiener woche automatisch gelöscht wird. 
     def löschen_in_woche(self, name):
+        
+        self.benutzer = self.repo.laden()
         expiry = date.today() + timedelta(days=7)
-
+        # Dann wird die Liste der Benutzer durchlaufen, um den Benutzer mit dem angegebenen Namen zu finden. Wenn der Benutzer gefunden wird, wird sein Ablaufdatum gesetzt und die aktualisierte Liste in der Datenbank gespeichert. Schließlich wird eine Erfolgsmeldung zurückgegeben. Wenn kein Benutzer mit dem Namen gefunden wird, wird eine Fehlermeldung zurückgegeben.
         for b in self.benutzer:
             if b.name == name:
+                
+                b.aktiv = False
                 b.expiry_date = expiry
                 self.repo.speichern(self.benutzer)
                 return f"Benutzer wird am {expiry} gelöscht"
@@ -83,3 +100,13 @@ class BenutzerService:
         for b in self.benutzer:
             if b.pas == "1234":
                 print(f"Benutzer {b.name} hat ein unsicheres Passwort!")
+
+    def deaktiv(self, name):
+
+        for b in self.benutzer:
+            if b.name == name:
+                b.aktiv = False
+                self.repo.speichern(self.benutzer)
+                return "Benutzer deaktiviert"
+            
+        return "Benutzer nicht gefunden"
