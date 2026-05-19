@@ -41,6 +41,31 @@ class BenutzerService:
     def anzeigen(self):
         return self.benutzer
 
+
+    # Die Methode deaktiv() sucht nach einem Benutzer mit dem angegebenen Namen. Wenn der Benutzer gefunden wird, wird sein Aktivitätsstatus umgeschaltet (deaktiviert oder aktiviert) und die aktualisierte Liste der Benutzer wird in der Datenbank gespeichert.
+    def deaktiv(self, name):
+        for b in self.benutzer:
+            if b.name == name:
+                if b.aktiv == True:
+                    b.aktiv = False 
+                    self.repo.speichern(self.benutzer)
+                    return "Benutzer deaktiviert"
+                else:
+                    b.aktiv = True 
+                    self.repo.speichern(self.benutzer)
+                return "Benutzer aktiviert " 
+        return "Benutzer nicht gefunden"
+    
+
+
+    ''' def aktiv(self, name):
+        for b in self.benutzer: 
+            if b.name == name:
+                b.aktiv = True
+                self.repo.speichern(self.benutzer)
+                return "Benutzer aktiviert"
+        return "Benutzer nicht gefunden"'''
+    
     # Die Methode löschen() entfernt einen Benutzer mit dem angegebenen Namen aus der Liste der Benutzer und speichert die aktualisierte Liste in der Datenbank. 
     # Wenn kein Benutzer mit dem Namen gefunden wird, wird eine Fehlermeldung zurückgegeben. Andernfalls wird eine Erfolgsmeldung zurückgegeben.
     def löschen(self, name):
@@ -51,7 +76,6 @@ class BenutzerService:
             return "Benutzer nicht gefunden"
         self.repo.speichern(self.benutzer)
         return "Benutzer gelöscht"
-    
     
     def löschen_sofort(self, name):
         return self.löschen(name)
@@ -65,18 +89,15 @@ class BenutzerService:
         for b in self.benutzer:
             if b.name == name:
                 
-                b.aktiv = False
                 b.expiry_date = expiry
                 self.repo.speichern(self.benutzer)
                 return f"Benutzer wird am {expiry} gelöscht"
-            
+
         return "Benutzer nicht gefunden"
 
     def geplante_loeschungen_anzeigen(self):
         return [b for b in self.benutzer if b.expiry_date is not None]
-    
-    
-
+    # 
     def bearbeiten(self, name, neuer_name=None, neues_pass=None):
         for b in self.benutzer:
             if b.name == name:
@@ -94,19 +115,3 @@ class BenutzerService:
 
     def logout(self):
         self.aktueller = None
-
-    def check_alte_benutzer(self):
-        # Beispiel: Alle Benutzer mit Passwort "1234" als unsicher markieren
-        for b in self.benutzer:
-            if b.pas == "1234":
-                print(f"Benutzer {b.name} hat ein unsicheres Passwort!")
-
-    def deaktiv(self, name):
-
-        for b in self.benutzer:
-            if b.name == name:
-                b.aktiv = False
-                self.repo.speichern(self.benutzer)
-                return "Benutzer deaktiviert"
-            
-        return "Benutzer nicht gefunden"

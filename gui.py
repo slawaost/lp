@@ -67,6 +67,9 @@ class GUI:
             tk.Button(self.frame, text="User sofort löschen", command=self.loeschen).pack(pady=5)
             tk.Button(self.frame, text="User später löschen", command=self.loeschen_spaeter).pack(pady=5)
             tk.Button(self.frame, text="Geplante Löschungen anzeigen", command=self.geplante_loeschungen_anzeigen).pack(pady=5)
+            tk.Button(self.frame, text="Benutzer bearbeiten", command=self.bearbeiten).pack(pady=5)
+            tk.Button(self.frame, text="Benutzer aktivieren", command=self.aktiv).pack(pady=5)
+            tk.Button(self.frame, text="Benutzer deaktivieren", command=self.deaktiv).pack(pady=5)
         
 
         tk.Button(self.frame, text="Logout", command=self.logout).pack(pady=5)
@@ -77,6 +80,28 @@ class GUI:
             result = self.service.löschen_in_woche(name)
             messagebox.showinfo("Info", result)
 
+    def bearbeiten(self):
+        name = tk.simpledialog.askstring("Bearbeiten", "Name:")
+        neuer_name = tk.simpledialog.askstring("Bearbeiten", "Neuer Name (optional):")
+        neues_pass = tk.simpledialog.askstring("Bearbeiten", "Neues Passwort (optional):")
+
+        if name:
+            result = self.service.bearbeiten(name, neuer_name, neues_pass)
+            messagebox.showinfo("Info", result)
+
+    def deaktiv(self):
+        name = tk.simpledialog.askstring("Deaktivieren", "Name:")
+        if name:
+            result = self.service.deaktiv(name)
+            messagebox.showinfo("Info", result)
+
+    def aktiv(self):
+        name = tk.simpledialog.askstring("Aktivieren", "Name:")
+        if name:
+            result = self.service.deaktiv(name)
+            messagebox.showinfo("Info", result) 
+
+                    
     def logout(self):
         self.service.logout()
         self.build_login()
