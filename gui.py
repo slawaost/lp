@@ -1,7 +1,7 @@
 import tkinter as tk
 from service import BenutzerService
 from tkinter import messagebox
-from tkinter import simpledialog
+from tkinter.simpledialog import askstring
 from warehouse_gui import open_warehouse as WarehouseGUI
 class GUI:
     def __init__(self, service: BenutzerService):
@@ -60,27 +60,27 @@ class GUI:
         tk.Button(self.frame, text="Logout", command=self.logout).pack(pady=5)
 
     def loeschen_spaeter(self):
-        name = tk.simpledialog.askstring("Löschen", "Name:")
+        name = askstring("Löschen", "Name:")
         if name:
             result = self.service.löschen_in_woche(name)
             messagebox.showinfo("Info", result)
 
     def bearbeiten(self):
-        name = tk.simpledialog.askstring("Bearbeiten", "Name:")
-        neuer_name = tk.simpledialog.askstring("Bearbeiten", "Neuer Name (optional):")
-        neues_pass = tk.simpledialog.askstring("Bearbeiten", "Neues Passwort (optional):")
+        name = askstring("Bearbeiten", "Name:")
+        neuer_name = askstring("Bearbeiten", "Neuer Name (optional):")
+        neues_pass = askstring("Bearbeiten", "Neues Passwort (optional):")
         if name:
             result = self.service.bearbeiten(name, neuer_name, neues_pass)
             messagebox.showinfo("Info", result)
 
     def deaktiv(self):
-        name = tk.simpledialog.askstring("Deaktivieren", "Name:")
+        name = askstring("Deaktivieren", "Name:")
         if name:
             result = self.service.deaktiv(name)
             messagebox.showinfo("Info", result)
 
     def aktiv(self):
-        name = tk.simpledialog.askstring("Aktivieren", "Name:")
+        name = askstring("Aktivieren", "Name:")
         if name:
             result = self.service.deaktiv(name)
             messagebox.showinfo("Info", result) 
@@ -95,7 +95,7 @@ class GUI:
         messagebox.showinfo("Benutzer", text)
 
     def loeschen(self):
-        name = tk.simpledialog.askstring("Löschen", "Name:")
+        name = askstring("Löschen", "Name:")
         if name:
             result = self.service.löschen(name)
             messagebox.showinfo("Info", result)
