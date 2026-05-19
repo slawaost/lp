@@ -61,8 +61,9 @@ class GUI:
 
     def loeschen_spaeter(self):
         name = askstring("Löschen", "Name:")
+        tage = askstring("Löschen", "tage:")
         if name:
-            result = self.service.löschen_in_woche(name)
+            result = self.service.löschen_spaeter(name, tage)
             messagebox.showinfo("Info", result)
 
     def bearbeiten(self):

@@ -57,9 +57,9 @@ class BenutzerService:
         return "Benutzer gelöscht"
     
     # diese methode setzt das ablaufdatum eines benutzers auf eine woche in der zukunft, damit er in eiener woche automatisch gelöscht wird. 
-    def löschen_in_woche(self, name):
+    def löschen_spaeter(self, name, tage):
         self.benutzer = self.repo.laden()
-        expiry = date.today() + timedelta(days=7)
+        expiry = date.today() + timedelta(days=int(tage))
         # Dann wird die Liste der Benutzer durchlaufen
         for b in self.benutzer:
             if b.name == name:
