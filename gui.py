@@ -50,14 +50,14 @@ class GUI:
         # ganz wichtig, damit user nicht hauptmenü sehen kann
         if self.service.ist_admin():
             tk.Button(self.frame, text="Benutzer anzeigen", command=self.anzeigen).pack(pady=5)
-            tk.Button(self.frame, text="Lagerverwaltung öffnen", command=self.open_warehouse).pack(pady=5)
-            tk.Button(self.frame, text="User sofort löschen", command=self.loeschen).pack(pady=5)
-            tk.Button(self.frame, text="User später löschen", command=self.loeschen_spaeter).pack(pady=5)
-            tk.Button(self.frame, text="Geplante Löschungen anzeigen", command=self.geplante_loeschungen_anzeigen).pack(pady=5)
+            tk.Button(self.frame, text="Benutzer sofort löschen", command=self.loeschen).pack(pady=5)
+            tk.Button(self.frame, text="Benutzer später löschen", command=self.loeschen_spaeter).pack(pady=5)
             tk.Button(self.frame, text="Benutzer bearbeiten", command=self.bearbeiten).pack(pady=5)
             tk.Button(self.frame, text="Benutzer aktivieren", command=self.aktiv).pack(pady=5)
             tk.Button(self.frame, text="Benutzer deaktivieren", command=self.deaktiv).pack(pady=5)
-        tk.Button(self.frame, text="Logout", command=self.logout).pack(pady=5)
+            tk.Button(self.frame, text="Geplante Löschungen anzeigen", command=self.geplante_loeschungen_anzeigen).pack(pady=5)
+            tk.Button(self.frame, text="Lagerverwaltung öffnen", command=self.open_warehouse).pack(pady=5)
+            tk.Button(self.frame, text="Logout", command=self.logout).pack(pady=5)
 
     def loeschen_spaeter(self):
         name = askstring("Löschen", "Name:")
@@ -103,7 +103,7 @@ class GUI:
 
     def geplante_loeschungen_anzeigen(self):
         users = self.service.geplante_loeschungen_anzeigen()
-        text = "\n".join([f"{b.name} (Löscht am {b.expiry_date})" for b in users])
+        text = "\n".join([f"{b.name} (Löscht am {b.expiry_datetime})" for b in users])
         if not text:
             text = "Keine geplanten Löschungen."
         messagebox.showinfo("Geplante Löschungen", text)

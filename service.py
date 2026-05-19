@@ -63,7 +63,7 @@ class BenutzerService:
         # Dann wird die Liste der Benutzer durchlaufen
         for b in self.benutzer:
             if b.name == name:
-                b.expiry_date = expiry
+                b.expiry_datetime = expiry
                 self.repo.speichern(self.benutzer)
                 return f"Benutzer wird am {expiry} gelöscht"
         return "Benutzer nicht gefunden"
@@ -89,7 +89,7 @@ class BenutzerService:
         return self.löschen(name)
 
     def geplante_loeschungen_anzeigen(self):
-        return [b for b in self.benutzer if b.expiry_date is not None]
+        return [b for b in self.benutzer if b.expiry_datetime is not None]
     
     def anzeigen(self):
         return self.benutzer

@@ -12,7 +12,7 @@ class BenutzerRepoDB:
         rows = cursor.fetchall()
         conn.close()
         return [
-            Benutzer(row['name'], row['pas'], row['rolle'], row['expiry_date'], row['aktiv'])
+            Benutzer(row['name'], row['pas'], row['rolle'], row['expiry_datetime'], row['aktiv'])
             for row in rows
         ]
     #Benutzer speichern (komplette Liste ersetzen)
@@ -22,8 +22,8 @@ class BenutzerRepoDB:
         cursor.execute("DELETE FROM python")
         for benutzer in liste:
             cursor.execute(
-                "INSERT INTO python (name, pas, rolle, expiry_date, aktiv) VALUES (%s, %s, %s, %s, %s)",
-                (benutzer.name, benutzer.pas, benutzer.rolle, benutzer.expiry_date, benutzer.aktiv)
+                "INSERT INTO python (name, pas, rolle, expiry_datetime, aktiv) VALUES (%s, %s, %s, %s, %s)",
+                (benutzer.name, benutzer.pas, benutzer.rolle, benutzer.expiry_datetime, benutzer.aktiv)
             )
         conn.commit()
         conn.close()
