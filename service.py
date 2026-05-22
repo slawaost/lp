@@ -94,3 +94,4 @@ class BenutzerService:
     
     def anzeigen(self):
         return self.benutzer
+    

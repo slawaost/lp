@@ -6,3 +6,4 @@ class Benutzer:
         self.rolle = rolle
         self.expiry_datetime = expiry_datetime
         self.aktiv = aktiv
+        
