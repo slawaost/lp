@@ -12,6 +12,7 @@ class GUI:
         self.frame = tk.Frame(self.root)
         self.frame.pack(padx=80, pady=80)
         self.build_login()
+        self.warehouse_window = None
 
     def clear_frame(self):
         for widget in self.frame.winfo_children():
@@ -37,7 +38,7 @@ class GUI:
             self.build_main()
 
     def open_warehouse(self):
-        WarehouseGUI(self.root, self.service.aktueller.name)
+        self.warehouse_window = WarehouseGUI(self.root, self.service.aktueller.name)
 
     def register(self):
         name = self.name_entry.get()
@@ -92,6 +93,9 @@ class GUI:
             messagebox.showinfo("Info", result) 
          
     def logout(self):
+        if self.warehouse_window is not None:
+            self.warehouse_window.destroy()
+            self.warehouse_window = None
         self.service.logout()
         self.build_login()
 
