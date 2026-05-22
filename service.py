@@ -1,6 +1,7 @@
 from neurepo import BenutzerRepoDB
 from model import Benutzer
 from datetime import date, timedelta
+
 # classBenutzerService ist die zentrale Klasse, die die Logik für die Benutzerverwaltung enthält.
 class BenutzerService:
     def __init__(self, repo: BenutzerRepoDB):

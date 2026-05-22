@@ -1,6 +1,7 @@
 from model import Benutzer
 from typing import List
 from db import DBConnection
+
 class BenutzerRepoDB:
     def __init__(self, db: DBConnection):
         self.db = db
@@ -15,6 +16,7 @@ class BenutzerRepoDB:
             Benutzer(row['name'], row['pas'], row['rolle'], row['expiry_datetime'], row['aktiv'])
             for row in rows
         ]
+    
     #Benutzer speichern (komplette Liste ersetzen)
     def speichern(self, liste: List[Benutzer]):
         conn = self.db.connect()

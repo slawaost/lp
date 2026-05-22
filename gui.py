@@ -3,6 +3,7 @@ from service import BenutzerService
 from tkinter import messagebox
 from tkinter.simpledialog import askstring
 from warehouse_gui import open_warehouse as WarehouseGUI
+
 class GUI:
     def __init__(self, service: BenutzerService):
         self.service = service
@@ -56,15 +57,19 @@ class GUI:
             tk.Button(self.frame, text="Benutzer aktivieren", command=self.aktiv).pack(pady=5)
             tk.Button(self.frame, text="Benutzer deaktivieren", command=self.deaktiv).pack(pady=5)
             tk.Button(self.frame, text="Geplante Löschungen anzeigen", command=self.geplante_loeschungen_anzeigen).pack(pady=5)
-            tk.Button(self.frame, text="Lagerverwaltung öffnen", command=self.open_warehouse).pack(pady=5)
-            tk.Button(self.frame, text="Logout", command=self.logout).pack(pady=5)
+        tk.Button(self.frame, text="Lagerverwaltung öffnen", command=self.open_warehouse).pack(pady=5)
+        tk.Button(self.frame, text="Logout", command=self.logout).pack(pady=5)
 
     def loeschen_spaeter(self):
         name = askstring("Löschen", "Name:")
         tage = askstring("Löschen", "tage:")
-        if name:
-            result = self.service.löschen_spaeter(name, tage)
-            messagebox.showinfo("Info", result)
+        # tage ist integer, deshalb dürfen andere werte nicht sein
+        try:
+            if name:
+                result = self.service.löschen_spaeter(name, tage)
+                messagebox.showinfo("Info", result)
+        except Exception as e:
+            messagebox.showerror("Fehler", str(e))
 
     def bearbeiten(self):
         name = askstring("Bearbeiten", "Name:")

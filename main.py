@@ -2,6 +2,7 @@ from db import DBConnection
 from neurepo import BenutzerRepoDB
 from service import BenutzerService
 from gui import GUI
+
 def main():
     # DB-Verbindung erstellen
     db = DBConnection()
