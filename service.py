@@ -21,6 +21,7 @@ class BenutzerService:
     
         # Die Methode anmelden() überprüft, ob ein Benutzer mit dem angegebenen Namen existiert. Wenn ja, wird das Passwort überprüft.
     def anmelden(self, name, pas):
+        self.abgelaufende_benutzer_entfernen
         # alle benutzer aus der datenbank laden, um sicherzustellen, dass die neursten daten verwendet werden. Dies ist wichtig, falls sich die benutzerliste geändert hat.
         self.benutzer = self.repo.laden()
         for b in self.benutzer:
@@ -49,6 +50,7 @@ class BenutzerService:
     
     # Die Methode löschen() entfernt einen Benutzer mit dem angegebenen Namen aus der Liste der Benutzer und speichert die aktualisierte Liste in der Datenbank. 
     def löschen(self, name):
+        self.benutzer = self.repo.laden() # lade aktuell daten
         # vorher die Anzahl der Benutzer speichern, um später zu überprüfen, ob ein Benutzer gelöscht wurde
         vorher = len(self.benutzer)
         self.benutzer = [b for b in self.benutzer if b.name != name]
@@ -58,6 +60,9 @@ class BenutzerService:
         return "Benutzer gelöscht"
     
     # diese methode setzt das ablaufdatum eines benutzers auf eine woche in der zukunft, damit er in eiener woche automatisch gelöscht wird. 
+    
+    #NICHT LÖSCHT IN DATENBANK!!!!
+    
     def löschen_spaeter(self, name, tage):
         self.benutzer = self.repo.laden()
         expiry = date.today() + timedelta(days=int(tage))
@@ -69,6 +74,13 @@ class BenutzerService:
                 return f"Benutzer wird am {expiry} gelöscht"
         return "Benutzer nicht gefunden"
     
+    def abgelaufende_benutzer_entfernen(self):
+        self.benutzer = self.repo.laden()
+
+        self.benutzer = [ b for b in self.benutzer if b.expiry_datetime is None or b.expiry_datetime > date.today() ]
+
+        self.repo.speichern(self.benutzer)
+
     def bearbeiten(self, name, neuer_name=None, neues_pass=None):
         for b in self.benutzer:
             if b.name == name:

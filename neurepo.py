@@ -21,7 +21,9 @@ class BenutzerRepoDB:
     def speichern(self, liste: List[Benutzer]):
         conn = self.db.connect()
         cursor = conn.cursor()
+        #lösche alle einträge in der tabelle, damit die neue liste komplett erstztz wird.
         cursor.execute("DELETE FROM python")
+        # dann füge alle benutzer aus der neuen liste ein.
         for benutzer in liste:
             cursor.execute(
                 "INSERT INTO python (name, pas, rolle, expiry_datetime, aktiv) VALUES (%s, %s, %s, %s, %s)",
@@ -29,4 +31,3 @@ class BenutzerRepoDB:
             )
         conn.commit()
         conn.close()
-        

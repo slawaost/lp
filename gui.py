@@ -37,6 +37,7 @@ class GUI:
         if result == "Login erfolgreich":
             self.build_main()
 
+    #diese methode übergeschrieben, damit die lagerverwaltung geöffnet werden kann, wenn der benutzer auf den entsprechenden button klickt. 
     def open_warehouse(self):
         self.warehouse_window = WarehouseGUI(self.root, self.service.aktueller.name)
 
@@ -93,6 +94,7 @@ class GUI:
             messagebox.showinfo("Info", result) 
          
     def logout(self):
+        # Wenn die Lagerverwaltungsfenster geöffnet ist, wird es geschlossen, bevor der Benutzer ausgeloggt wird.
         if self.warehouse_window is not None:
             self.warehouse_window.destroy()
             self.warehouse_window = None
@@ -119,4 +121,3 @@ class GUI:
 
     def run(self):
         self.root.mainloop()
-        
