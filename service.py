@@ -23,7 +23,7 @@ class BenutzerService:
     
         # Die Methode anmelden() überprüft, ob ein Benutzer mit dem angegebenen Namen existiert. Wenn ja, wird das Passwort überprüft.
     def anmelden(self, name, pas):
-        self.abgelaufende_benutzer_entfernen
+        self.abgelaufende_benutzer_entfernen()
         # alle benutzer aus der datenbank laden, um sicherzustellen, dass die neursten daten verwendet werden. Dies ist wichtig, falls sich die benutzerliste geändert hat.
         self.benutzer = self.repo.laden()
         for b in self.benutzer:
@@ -80,7 +80,7 @@ class BenutzerService:
     def abgelaufende_benutzer_entfernen(self):
         self.benutzer = self.repo.laden()
 
-        self.benutzer = [ b for b in self.benutzer if b.expiry_datetime is None or b.expiry_datetime > date.today() ]
+        self.benutzer = [ b for b in self.benutzer if b.expiry_datetime is None or b.expiry_datetime.date() > date.today() ]
 
         self.repo.speichern(self.benutzer)
 
