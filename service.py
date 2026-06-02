@@ -1,6 +1,7 @@
 from neurepo import BenutzerRepoDB
 from model import Benutzer
 from datetime import date, timedelta
+import hashlib
 
 # classBenutzerService ist die zentrale Klasse, die die Logik für die Benutzerverwaltung enthält.
 class BenutzerService:
@@ -14,7 +15,8 @@ class BenutzerService:
         if any(b.name == name for b in self.benutzer):
             return "Benutzer existiert bereits"
         # Andernfalls wird ein neues Benutzer-Objekt erstellt, zur Liste der Benutzer hinzugefügt und in der Datenbank gespeichert. 
-        self.benutzer.append(Benutzer(name, pas, rolle))
+        hash_password = hashlib.sha256(pas.encode("utf-8")).hexdigest() # Passwort wird gehashed, um es sicherer zu speichern.
+        self.benutzer.append(Benutzer(name, hash_password, rolle))
         # einfach speichern
         self.repo.speichern(self.benutzer)
         return "Benutzer erstellt"
@@ -28,7 +30,8 @@ class BenutzerService:
             if b.name == name:
                 if not b.aktiv:
                     return "Benutzer ist deaktiviert"
-                if b.pas == pas:
+                hash_password = hashlib.sha256(pas.encode("utf-8")).hexdigest()
+                if b.pas == hash_password:
                     self.aktueller = b
                     return "Login erfolgreich"
                 return "Falsches Passwort"
