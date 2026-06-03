@@ -89,6 +89,7 @@ class BenutzerService:
             if b.name == name:
                 if neuer_name:
                     b.name = neuer_name
+                    #muss hashen
                 if neues_pass:
                     b.pas = neues_pass
                 self.repo.speichern(self.benutzer)
