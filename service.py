@@ -89,9 +89,14 @@ class BenutzerService:
             if b.name == name:
                 if neuer_name:
                     b.name = neuer_name
+                    
                     #muss hashen
                 if neues_pass:
-                    b.pas = neues_pass
+                    b.pas = neues_pass 
+
+                    neu_pass_hashed = hashlib.sha256(neues_pass.encode("utf-8")).hexdigest()
+                    b.pas = neu_pass_hashed
+
                 self.repo.speichern(self.benutzer)
                 return "Benutzer bearbeitet"
         return "Benutzer nicht gefunden"
